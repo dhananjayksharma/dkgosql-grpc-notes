@@ -1,0 +1,34 @@
+syntax = "proto3";
+package notes;
+
+option go_package = "github.com/dhananjayksharma/dkgosql-grpc-notes;notes";
+
+// The notes service definition.
+service Notes {
+    // Saving a note
+    rpc Save (Note) returns (NoteSaveReply) {}
+    
+    // Save a note via Streaming
+    rpc SaveLargeNote (stream Note) returns (NoteSaveReply) {}
+
+    // Retrieving a note
+    rpc Load (NoteSearch) returns (Note) {}
+  }
+  
+  // The request message containing the note title
+  message Note {
+    string title = 1;
+    string id = 2;
+    bytes body  = 3;
+  }
+  
+  // The response message confirming if the note is saved
+  message NoteSaveReply {
+    bool saved = 1;
+  }
+  
+  // The request message containing the note title
+  message NoteSearch {
+    string keyword = 1;
+  }
+    
